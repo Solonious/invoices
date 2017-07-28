@@ -11,10 +11,12 @@ import { Invoices } from '../../shared/invoices';
     providers: [InvoicesService]
 })
 export class InvoicesComponent implements OnInit {
-    title = 'Invoices';
     invoices: Invoices[] = [];
     constructor(private invoicesService: InvoicesService) {}
     ngOnInit(): void {
+        this.getInvoices();
+    }
+    getInvoices(): void {
         this.invoicesService.getInvoices()
             .then(data => this.invoices = data)
             .catch(this.invoicesService.handleError);
