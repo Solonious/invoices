@@ -12,14 +12,20 @@ import { InvoicesService } from '../../invoices.service';
     providers: [InvoicesService]
 })
 export class InvoiceFormComponent implements OnInit {
-    customers: Customers[];
-    products: Products[];
-    htmlTextProduct = `
-		<td><select  class="form-control"></select></td>
-		<td class="col-xs-1"><input type="text" class="form-control"></td>
-		<td>0 %</td>
-		<td>255 <a style="float: right" (click)="alert('ok')">delete</a></td>
-    `;
+    customers: Customers[] = [{id: 1, name: 'Ivan', address: 'Vasylkowskaya str', phone: '+3805000000'}];
+    selectedCustomer = null;
+    products: Products[] = [
+        {id: 1, name: 'Milk', price: 255},
+        {id: 2, name: 'Bred', price: 255},
+        {id: 3, name: 'Potato', price: 255}
+    ];
+    selectedProduct = null;
+    // htmlTextProduct = `
+		// <td><select  class="form-control"></select></td>
+		// <td class="col-xs-1"><input type="text" class="form-control"></td>
+		// <td>0 %</td>
+		// <td>255 <a style="float: right" (click)="alert('ok')">delete</a></td>
+    // `;
     constructor(private invoicesService: InvoicesService) {}
     ngOnInit() {
         this.getCustomers();
@@ -37,8 +43,7 @@ export class InvoiceFormComponent implements OnInit {
     }
     addProduct(): void {
         const body = document.getElementsByTagName('tbody')[0];
-        const tr = document.createElement('tr');
-        tr.innerHTML = this.htmlTextProduct;
-        body.appendChild(tr);
+        const prodRow = document.getElementById('productRow');
+        body.appendChild(prodRow.cloneNode(true));
     }
 }
