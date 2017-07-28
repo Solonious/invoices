@@ -1,0 +1,35 @@
+<form>
+	<div class="form-group row">
+		<div class="col-xs-2">
+			<label for="custumer_name">Customers Name :</label>
+			<select  class="form-control" id="custumer_name"></select>
+		</div>
+		<div class="col-xs-2">
+			<label for="discount">Discount :</label>
+			<input type="email" class="form-control" id="discount">
+		</div>
+		<button class="btn add-btn" (click)="addProduct()">Add product</button>
+	</div>
+</form>
+<table class="table">
+	<thead>
+	<tr>
+		<th>Product</th>
+		<th>amount</th>
+		<th>discount</th>
+		<th>total</th>
+	</tr>
+	</thead>
+	<tbody id="tbody">
+	<tr>
+		<td><select  class="form-control"></select></td>
+		<td class="col-xs-1"><input type="text" class="form-control"></td>
+		<td>0 %</td>
+		<td>255</td>
+	</tr>
+	</tbody>
+<div>
+	<p>Total: </p>
+</div>
+</table>
+<button class="btn" routerLink="/invoices" routerLinkActive="active">Back</button>
