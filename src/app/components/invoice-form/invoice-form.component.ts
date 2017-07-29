@@ -21,7 +21,7 @@ export class InvoiceFormComponent implements OnInit {
     name: string,
     amount: number,
     price: number,
-    total: number
+    total: number,
   }[] = [];
   invoices: Invoices[];
   customers: Customers[] = [];
@@ -29,7 +29,9 @@ export class InvoiceFormComponent implements OnInit {
   products: Products[] = [];
   selectedProduct = null;
   discountValue = 0;
+  amountValue = 1;
   total = 0;
+  currentTotal: number;
   constructor(private invoicesService: InvoicesService) {}
   ngOnInit() {
     this.getCustomers();
@@ -46,16 +48,21 @@ export class InvoiceFormComponent implements OnInit {
       .catch(this.invoicesService.handleError);
   }
   addProduct(amount: number): void {
-    const product = this.products[this.selectedProduct - 1];
-    const customer = this.customers[this.selectedCustomer - 1];
-    const discount = +(this.discountValue / 100).toFixed(2);
+    const product = this.products[this.selectedProduct - 1],
+      customer = this.customers[this.selectedCustomer - 1];
+      if (!this.discountValue) {
+        this.currentTotal = (amount * (product.price * 100)) / 100;
+      } else {
+        const discount = ((product.price * 100 * this.discountValue) / 100).toFixed(2);
+        this.currentTotal = amount * ((product.price * 100 - parseInt(discount)) / 100);
+      }
     this.productsList.unshift({
       name: product.name,
       amount: +amount,
       price: product.price,
-      total: (amount * (product.price * 100) * discount) / 100
+      total: this.currentTotal
     });
-    this.calculate();
+    this.calculateTotal(this.currentTotal);
     this.createInvoice({
       customer_id: customer.id,
       discount: this.discountValue,
@@ -75,8 +82,12 @@ export class InvoiceFormComponent implements OnInit {
   //   });
   //   this.calculate();
   // }
-  private calculate(): void {
-    this.productsList.forEach(item => this.total += item.total);
+  private calculateTotal(value: number): void {
+    // this.productsList.forEach(item => {
+    //   console.log(item.total);
+    //   this.total += item.total * 100;
+    // });
+    this.total += Math.round(value * 100) / 100;
   }
 }
 
