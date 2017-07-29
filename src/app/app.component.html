@@ -1,8 +1,23 @@
 <div class="container">
-    <h1>{{title}}</h1>
-    <nav>
-<!--        <a routerLink="/voices" routerLinkActive="active">Voices</a>-->
-<!--        <a routerLink="/add-voices" routerLinkActive="active">Add voices</a>-->
+      <nav class="navbar navbar-default navbar-static-top">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Invoice App</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li><a href="#" routerLink="/products" routerLinkActive="active">Products</a></li>
+              <li><a href="#" routerLink="/customers" routerLinkActive="active">Customers</a></li>
+              <li><a href="#" routerLink="/invoices" routerLinkActive="active">Invoices</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
     </nav>
     <router-outlet></router-outlet>
 </div>

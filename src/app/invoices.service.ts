@@ -10,7 +10,7 @@ import { Products } from './shared/products';
 
 @Injectable()
 export class InvoicesService {
-    private host = 'localhost:8000';
+    private host = 'http://localhost:8000';
     private customersUrl = `${this.host}/api/customers`;
     private productsUrl = `${this.host}/api/products`;
     private invoicesUrl = `${this.host}/api/invoices`;
@@ -43,6 +43,20 @@ export class InvoicesService {
             .toPromise()
             .then(res => res.json() as Products[])
             .catch(this.handleError);
+    }
+    getInvoice(id: number): Promise<Invoices> {
+      const url = `${this.invoicesUrl}/${id}`;
+      return this.http.get(url)
+        .toPromise()
+        .then(res => res.json() as Invoices)
+        .catch(this.handleError);
+    }
+    createInvoice(invoice: Invoices): Promise<Invoices> {
+      const url = this.invoicesUrl;
+      return this.http.post(url, JSON.stringify(invoice), {headers: this.headers})
+        .toPromise()
+        .then(res => res.json() as Invoices)
+        .catch(this.handleError);
     }
     // update(hero: Hero): Promise<Hero> {
     //     const url = `${this.heroesUrl}/${hero.id}`;

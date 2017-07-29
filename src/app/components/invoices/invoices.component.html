@@ -1,13 +1,14 @@
-	<table class="table">
+<h3>{{title}}</h3>
+<table class="table">
 		<thead>
 		<tr>
-			<th>id</th>
+			<th>ID</th>
 			<th>Custumer Name</th>
 			<th>Discount</th>
 			<th>Total</th>
 		</tr>
 		</thead>
-		<tbody>
+		<tbody *ngIf="invoices.length">
 		<tr>
 			<td>4546</td>
 			<td>Doe Jhon</td>

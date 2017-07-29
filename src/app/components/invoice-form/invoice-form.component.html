@@ -2,38 +2,26 @@
 	<div class="form-group row">
 		<div class="col-xs-2">
 			<label for="custumer_name">Customers Name :</label>
-			<select [(ngModel)]="selectedCustomer" class="form-control" id="custumer_name">
-                <option *ngFor="let item of customers" [ngValue]="item.id">{{item.name}}</option>
-            </select>
+			<select [(ngModel)]="selectedCustomer" class="form-control" id="custumer_name" [ngModelOptions]="{standalone: true}">
+        <option *ngFor="let item of customers" [ngValue]="item.id">{{item.name}}</option>
+      </select>
 		</div>
 		<div class="col-xs-2">
 			<label for="discount">Discount :</label>
-			<input type="email" class="form-control" id="discount">
+			<input [(ngModel)]="discountValue" name="discountValue" type="number" class="form-control" id="discount" [ngModelOptions]="{standalone: true}">
 		</div>
-		<button class="btn add-btn" (click)="addProduct()">Add product</button>
+    <div class="col-xs-4">
+      <label for="product_name">Product name :</label>
+      <select  [(ngModel)]="selectedProduct" name="selectedProduct" id="product_name" class="form-control">
+        <option *ngFor="let item of products" [ngValue]="item.id">{{item.name}}</option>
+      </select>
+    </div>
+    <div class="col-xs-1">
+      <label for="amount">Amount :</label>
+      <input #amount type="number" id="amount" class="form-control">
+    </div>
+		<button class="btn add-btn" (click)="addProduct(amount.value)">Add product</button>
 	</div>
 </form>
-<table class="table">
-	<thead>
-	<tr>
-		<th>Product</th>
-		<th>amount</th>
-		<th>discount</th>
-		<th>total</th>
-	</tr>
-	</thead>
-	<tbody id="tbody">
-    <tr id="productRow">
-        <td><select [(ngModel)]="selectedProduct" class="form-control">
-                <option *ngFor="let item of products" [ngValue]="item.id">{{item.name}}</option>
-            </select></td>
-        <td class="col-xs-1"><input type="text" class="form-control"></td>
-        <td>0 %</td>
-        <td>255 <a class="del">delete</a></td>
-    </tr>
-	</tbody>
-<div>
-	<p>Total: </p>
-</div>
-</table>
+<product-table [productsList]="productsList" [total]="total"></product-table>
 <button class="btn" routerLink="/invoices" routerLinkActive="active">Back</button>
