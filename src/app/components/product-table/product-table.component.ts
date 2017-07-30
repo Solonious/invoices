@@ -11,13 +11,14 @@ import {DecimalPipe} from '@angular/common';
         <th class="amount">amount</th>
         <th>price</th>
         <th>total</th>
+        <th></th>
       </tr>
       </thead>
       <tbody *ngIf="productsList.length">
         <tr *ngFor="let item of productsList">
           <td>{{item.name}}</td>
           <td class="amount">
-            <input [(ngModel)]="item.amount" name="item.amount" type="number" id="amount" class="form-control"></td>
+            <input [(ngModel)]="item.amount" min="1" name="item.amount" type="number" id="amount" class="form-control"></td>
           <td>{{item.price}}</td>
           <td>{{item.total}}</td>
         </tr>
@@ -29,7 +30,10 @@ import {DecimalPipe} from '@angular/common';
   `,
   styles: [`
     .amount {
-      width: 67px;
+      width: 80px;
+    }
+    .amount input {
+      height: 22px;
     }
   `]
 })

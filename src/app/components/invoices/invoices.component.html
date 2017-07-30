@@ -9,11 +9,11 @@
 		</tr>
 		</thead>
 		<tbody *ngIf="invoices.length">
-		<tr>
-			<td>4546</td>
-			<td>Doe Jhon</td>
-			<td>25%</td>
-			<td>255</td>
+		<tr *ngFor="let item of invoices">
+      <td>{{item.customer_id}}</td>
+			<td>{{getCustomerName(item.customer_id)}}</td>
+			<td>{{item.discount}} %</td>
+			<td>{{item.total}}</td>
 		</tr>
 		</tbody>
 	</table>

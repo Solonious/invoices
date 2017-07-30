@@ -14,7 +14,10 @@ export class InvoicesService {
     private customersUrl = `${this.host}/api/customers`;
     private productsUrl = `${this.host}/api/products`;
     private invoicesUrl = `${this.host}/api/invoices`;
-    private headers = new Headers({'Content-Type': 'application-json'});
+    private headers = new Headers(
+      {'Content-Type': 'application-json'}
+      // {'Content-Type': 'application/x-www-form-urlencoded'}
+      );
     constructor(private http: Http) {}
     getInvoices(): Promise<Invoices[]> {
         return this.http.get(this.invoicesUrl)
@@ -52,32 +55,30 @@ export class InvoicesService {
         .catch(this.handleError);
     }
     createInvoice(invoice: Invoices): Promise<Invoices> {
-      const url = this.invoicesUrl;
-      return this.http.post(url, JSON.stringify(invoice), {headers: this.headers})
+      return this.http.post(
+        this.invoicesUrl,
+        JSON.stringify(invoice),
+        {headers: this.headers}
+        )
         .toPromise()
         .then(res => res.json() as Invoices)
         .catch(this.handleError);
     }
-    // update(hero: Hero): Promise<Hero> {
-    //     const url = `${this.heroesUrl}/${hero.id}`;
-    //     return this.http
-    //         .put(url, JSON.stringify(hero), {headers: this.headers})
-    //         .toPromise()
-    //         .then(() => hero)
-    //         .catch(this.handleError);
-    // }
-    // create(name: string): Promise<Hero> {
-    //     return this.http
-    //         .post(this.heroesUrl, JSON.stringify({name: name}), {headers: this.headers})
-    //         .toPromise()
-    //         .then(res => res.json().data as Hero)
-    //         .catch(this.handleError);
-    // }
-    // delete(id: number): Promise<void> {
-    //     const url = `${this.heroesUrl}/${id}`;
-    //     return this.http.delete(url, {headers: this.headers})
-    //         .toPromise()
-    //         .then(() => null)
-    //         .catch(this.handleError);
-    // }
+    updateInvoice(invoice: Invoices): Promise<Invoices> {
+      return this.http.put(
+        `${this.invoicesUrl}/${invoice.id}`,
+        JSON.stringify(invoice),
+        {headers: this.headers}
+        )
+        .toPromise()
+        .then(() => invoice)
+        .catch(this.handleError);
+    }
+    deleteInvoice(id: number): Promise<void> {
+      return this.http.delete(
+        `${this.invoicesUrl}/${id}`, {headers: this.headers})
+        .toPromise()
+        .then(() => null)
+        .catch(this.handleError);
+    }
 }

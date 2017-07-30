@@ -3,8 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { Customers } from '../../shared/customers';
 import { Products } from '../../shared/products';
 import { Invoices } from '../../shared/invoices';
-import { InvoiceItem } from '../../shared/invoice-item';
-
 
 import { InvoicesService } from '../../invoices.service';
 
@@ -23,7 +21,7 @@ export class InvoiceFormComponent implements OnInit {
     price: number,
     total: number,
   }[] = [];
-  invoices: Invoices[];
+  invoices: Invoices[] = [];
   customers: Customers[] = [];
   selectedCustomer = null;
   products: Products[] = [];
@@ -64,6 +62,7 @@ export class InvoiceFormComponent implements OnInit {
     });
     this.calculateTotal(this.currentTotal);
     this.createInvoice({
+      id: this.id++,
       customer_id: customer.id,
       discount: this.discountValue,
       total: this.total
@@ -71,23 +70,19 @@ export class InvoiceFormComponent implements OnInit {
   }
   createInvoice(invoice: Invoices): void {
     this.invoicesService.createInvoice(invoice)
-      .then(res => console.log(res.customer_id));
+      .then(res => this.invoices.push(res))
+      .catch(this.invoicesService.handleError);
   }
-  // addInvoiceItem(amount: number): void {
-  //   const product = this.products[this.selectedProduct - 1];
-  //   this.invoices.unshift({
-  //     invoice_id: this.id,
-  //     product_id: product.id,
-  //     quantity: +amount
-  //   });
-  //   this.calculate();
-  // }
   private calculateTotal(value: number): void {
-    // this.productsList.forEach(item => {
-    //   console.log(item.total);
-    //   this.total += item.total * 100;
-    // });
     this.total += Math.round(value * 100) / 100;
+  }
+  updateInvoice(invoice: Invoices): void {
+    this.invoicesService.updateInvoice(invoice)
+      .then(res => console.log(res))
+      .catch(this.invoicesService.handleError);
+  }
+  findInvoiceById(id: number): Invoices[] {
+    return this.invoices.filter(item => item.id === id);
   }
 }
 

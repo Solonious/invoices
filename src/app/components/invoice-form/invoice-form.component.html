@@ -8,7 +8,11 @@
 		</div>
 		<div class="col-xs-1">
 			<label for="discount">Discount :</label>
-			<input [(ngModel)]="discountValue" name="discountValue" type="number" class="form-control" id="discount" [ngModelOptions]="{standalone: true}">
+			<input [(ngModel)]="discountValue"
+             name="discountValue"
+             type="number"
+             min="0" max="100"
+             class="form-control" id="discount" [ngModelOptions]="{standalone: true}">
 		</div>
     <div class="col-xs-4">
       <label for="product_name">Product name :</label>
@@ -18,7 +22,10 @@
     </div>
     <div class="col-xs-1">
       <label for="amount">Amount :</label>
-      <input  [(ngModel)]="amountValue" name="amountValue" type="number" id="amount" class="form-control">
+      <input  [(ngModel)]="amountValue"
+              name="amountValue"
+              min="1"
+              type="number" id="amount" class="form-control">
     </div>
 		<button class="btn add-btn" (click)="addProduct(amountValue)" [disabled]="!selectedProduct  || !selectedCustomer">Add product</button>
 	</div>
