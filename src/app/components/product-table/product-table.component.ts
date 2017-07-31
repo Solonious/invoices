@@ -11,7 +11,6 @@ import {DecimalPipe} from '@angular/common';
         <th class="amount">amount</th>
         <th>price</th>
         <th>total</th>
-        <th></th>
       </tr>
       </thead>
       <tbody *ngIf="productsList.length">
